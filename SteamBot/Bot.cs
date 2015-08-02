@@ -915,20 +915,23 @@ namespace SteamBot
             if (runWorkerCompletedEventArgs.Error != null)
             {
                 Exception ex = runWorkerCompletedEventArgs.Error;
-
+				try{
                 Log.Error("Unhandled exceptions in bot {0} callback thread: {1} {2}",
                       DisplayName,
                       Environment.NewLine,
                       ex);
-
+				}catch(Exception){}
                 Log.Info("This bot died. Stopping it..");
                 //backgroundWorker.RunWorkerAsync();
                 //Thread.Sleep(10000);
                 StopBot();
                 //StartBot();
+				return;
+
             }
 
-            Log.Dispose();
+			Log.Dispose ();
+
         }
 
         private void BackgroundWorkerOnDoWork(object sender, DoWorkEventArgs doWorkEventArgs)
